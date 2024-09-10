@@ -1,0 +1,791 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/* GENERAL DESIGN */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Reem Kufi", sans-serif;
+}
+.App {
+    /* min-height: 100vh; */
+    width: 100vw;
+    margin: 0rem auto;
+}
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* HOME PAGE */
+/* ----- Home ----- */
+.homeContent {
+    display: flex;
+    padding: 0.5rem 5rem;
+    gap: 1rem;
+    align-content: center;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 8%;
+}
+.text {
+    display: flex;
+    text-align: center;
+    flex: 1;
+    width: 100%;
+    flex-direction: column;
+    gap: 1.5rem;
+    color: rgb(244, 225, 243);
+}
+.homeSlogan {
+    font-family: "Poppins", sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
+}
+.homeDescription {
+    line-height: 2rem;
+    font-size: larger;
+}
+.loginBox {
+    display: flex;
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+}
+
+/* ----- LoginForm ----- */
+.loginFormContainer {
+    background: rgb(237, 237, 237, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 1rem 0.5rem;
+    color: white;
+    border-radius: 10px;
+    width: 90%;
+}
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 1rem;
+}
+.formHeading {
+    margin-bottom: 1rem;
+    font-weight: 700;
+    font-size: 2rem;
+    color: white;
+}
+.loginInputs {
+    min-height: 2rem;
+    border-radius: 10px;
+    width: 80%;
+    padding-left: 1rem;
+    border: none;
+}
+.submitButton {
+    min-height: 2rem;
+    padding: 0 1rem;
+    border-radius: 10px;
+    font-size: medium;
+    border: none;
+    font-weight: 600;
+    color: white;
+    background-color: #e49746;
+    cursor: pointer;
+    box-shadow: 8px 8px 8px rgba(10, 99, 169, 0.16);
+    transition: all 0.1s ease;
+}
+.submitButton:hover {
+    background-color: #efa04b;
+    color: rgb(139, 131, 131);
+    box-shadow: inset 8px 8px 8px rgba(10, 99, 169, 0.16),
+        inset -5px -5px 5px rgba(207, 196, 196, 0.7);
+    transform: translateY(5px);
+}
+.forRegister {
+    width: 80%;
+    padding-top: 1rem;
+    border-top: 2px solid rgb(223, 214, 214);
+    font-size: small;
+}
+
+/* ----- BackgroundChanger ----- */
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out;
+    z-index: -10;
+}
+
+/* ----- App ----- */
+.colorOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -5;
+    background-color: rgba(140, 87, 153, 0.7);
+}
+
+/* ----- Navbar ----- */
+.navbarContainer {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.5rem 5rem;
+    background-color: rgba(131, 88, 141, 0.9);
+    align-items: center;
+    /* border: 1px solid red; */
+}
+.navbarLogo {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+.logo {
+    height: 4rem;
+    margin-right: 1rem;
+    /* border: 1px solid rgb(115, 240, 81); */
+}
+.navbarButtons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: fit-content;
+    gap: 3rem;
+}
+.navbarButtons a {
+    color: white;
+    font-size: larger;
+    text-decoration: none;
+}
+.logButton {
+    padding: 0.5rem;
+    margin-left: 2px;
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    font-size: larger;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.logButton:hover {
+    background-color: white;
+    color: gray;
+    border: 2px solid white;
+}
+
+/* ----- NavbarDrawer ----- */
+.menuMobileButton {
+    border-radius: 10px;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    border: 2px solid white;
+}
+.menuMobileButton:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.mobileNav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.mobileNav a {
+    text-decoration: none;
+}
+.mobileNav a:hover {
+    color: purple;
+    font-weight: 700;
+}
+.mobileSignupButton {
+    padding: 0.5rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    font-size: large;
+    color: rgb(131, 88, 141);
+    border: 2px solid rgb(131, 88, 141);
+    border: 2px solid white;
+}
+.mobileSignupButton:hover {
+    background-color: rgb(131, 88, 141);
+    color: white;
+}
+/* ----- Footer ----- */
+.footerContainer {
+    color: rgb(255, 255, 255);
+    background-color: rgb(179, 153, 185);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 7%;
+}
+.footerRightLists {
+    display: flex;
+    font-size: small;
+    padding-top: 1.5rem;
+    justify-content: center;
+    color: #ffffff;
+    min-width: 17rem;
+    gap: 1.5rem;
+}
+.footerRightLists a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+/* ABOUT US PAGE */
+.aboutUsContainer {
+    padding: 0.5rem 3rem;
+    /* color: rgb(174, 84, 174); */
+    color: rgb(201, 124, 201);
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.pageHeader {
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 3rem;
+}
+.aboutImageLeft {
+    float: left;
+    width: 12rem;
+    margin: 1rem;
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.8);
+}
+.aboutContent p {
+    text-indent: 3rem;
+    margin-bottom: 1rem;
+}
+.aboutImageRight {
+    float: right;
+    width: 12rem;
+    min-width: 3rem;
+    margin: 1rem;
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.8);
+}
+
+/* CONTACT PAGE */
+.contactPageContainer {
+    color: rgb(244, 225, 243);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contactPageContent {
+    background: rgb(237, 237, 237, 0.2);
+    backdrop-filter: blur(10px);
+    margin-top: 3%;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    width: 60%;
+    text-align: center;
+}
+.headerTitle {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+.contactText {
+    margin: 1.5rem 0;
+}
+.contactLink {
+    text-decoration: none;
+    color: purple;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1rem;
+}
+
+/* SIGN UP PAGE */
+.signupContainer {
+    display: flex;
+    margin-top: 3%;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.signupContent {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding: 1rem;
+    justify-content: center;
+    width: 70%;
+    border-radius: 10px;
+    background: rgb(237, 237, 237, 0.2);
+    backdrop-filter: blur(10px);
+}
+.signupInputs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.userInputBox {
+    height: 2rem;
+    width: 100%;
+    margin: 0.5rem;
+    border: none;
+    border-radius: 10px;
+    padding-left: 1rem;
+}
+
+/* DASHBOARD PAGE */
+.dashboardContainer {
+    display: inline-flex;
+    padding: 2rem 4rem;
+    width: 100%;
+    height: 100vh;
+    gap: 1.5rem;
+    background-color: #f0f0f0;
+}
+.dashboardButtonsBox {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0.5rem 0.5rem 0;
+    flex: 1;
+    gap: 0.8rem;
+    border-radius: 2px;
+    text-align: center;
+    /* border-right: 2px solid rgb(150, 149, 149); */
+}
+.dashboardContent {
+    display: flex;
+    flex: 5;
+    border-radius: 5px;
+    padding: 0.5rem;
+    background-color: white;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.dashboardButton {
+    font-size: large;
+    border-radius: 5px;
+    border: none;
+    padding: 1rem 0;
+    cursor: pointer;
+    align-content: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.userLabel {
+    font-weight: 600;
+    border-bottom: 1px dotted black;
+}
+/* ----- MyInventory ----- */
+.myInventoryContainer {
+    width: 100%;
+}
+.emptyNotice {
+    display: flex;
+    width: auto;
+    margin-top: 1rem;
+    margin-left: 2rem;
+    color: #bca9c0;
+}
+
+.tableRow:hover {
+    background-color: #f0f0f0;
+}
+.invInputForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.invInput {
+    display: flex;
+    width: 3.7rem;
+    padding: 0.2rem;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+.actionInvIconsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.actionIcons {
+    border: none;
+    border-radius: 10px;
+    padding: 0.2rem;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    cursor: pointer;
+}
+.trial {
+    background-color: rgb(213, 165, 46);
+}
+/* ----- EditInfoModal ----- */
+.chemInfoModalContainer {
+    color: gray;
+}
+.modalHeader {
+    display: flex;
+    margin-bottom: 2rem;
+}
+.modalInputBox {
+    height: 2rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding-left: 0.5rem;
+    margin-left: 0.5rem;
+    width: 100%;
+}
+.modalInputBox:focus {
+    border: 1px solid purple;
+    box-shadow: 0 0 3px purple;
+    outline-offset: 0px;
+    outline: none;
+}
+.inputModalContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+.inputModalContainer div {
+    display: flex;
+    flex-direction: row;
+}
+.modalRightLabel {
+    margin-left: 2rem;
+}
+.deleteModalBox {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+.deleteModalButnsContainer {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+.modalCancelBtn {
+    background-color: #ffb300;
+    color: white;
+    font-size: large;
+    border-radius: 5px;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+.modalCancelBtn:hover {
+    background-color: #f4ca68;
+}
+.modalYesBtn {
+    background-color: rgb(58, 154, 58);
+    color: white;
+    width: 4rem;
+    font-size: large;
+    border-radius: 5px;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+.modalYesBtn:hover {
+    background-color: rgb(83, 170, 83);
+}
+.italicizedWord {
+    color: purple;
+    font-style: italic;
+}
+/* ----- DownloadInfoModal ----- */
+.modalBox {
+    overflow-y: scroll;
+}
+.downloadInfoContainer {
+    display: flex;
+    flex-direction: column;
+    color: gray;
+    width: 100%;
+}
+.supRow {
+    padding-bottom: 1rem;
+}
+.downloadInfoHeader {
+    display: flex;
+    justify-content: flex-end;
+}
+.downloadInfoHeader button {
+    cursor: pointer;
+}
+.chemInfo {
+    margin-bottom: 1rem;
+}
+/* ----- UpdateUserModal ----- */
+.updateUserBox {
+    color: gray;
+}
+.updateUserEmpIdBox {
+    width: 30%;
+}
+/* ----- AddChemical ----- */
+.addChemContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    color: white;
+    /* font-family: "Poppins", sans-serif; */
+}
+.addChemForm {
+    display: flex;
+    flex-direction: column;
+    background-color: #bca9c0;
+    width: 70%;
+    border-radius: 10px;
+    padding: 1rem;
+}
+.addChemHeader {
+    text-align: center;
+}
+.addChemForm label,
+.inputContainer {
+    margin-top: 1rem;
+}
+.addChemForm input,
+select {
+    height: 2rem;
+    padding-left: 0.5rem;
+    border-radius: 5px;
+    /* border: 1px solid gray; */
+    border: none;
+}
+.addButtonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.addChemInputDetails {
+    margin-left: 0.5rem;
+}
+.addButton {
+    display: flex;
+    width: 30%;
+    padding: 0.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(58, 154, 58);
+    color: white;
+    font-size: large;
+    font-weight: 600;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 8px 8px 8px rgba(10, 99, 169, 0.16);
+    transition: all 0.1s ease;
+}
+.addButton:hover {
+    background-color: rgb(83, 170, 83);
+    color: rgb(240, 226, 226);
+    box-shadow: inset 8px 8px 8px rgba(10, 99, 169, 0.16),
+        inset -5px -5px 5px rgba(207, 196, 196, 0.7);
+    transform: translateY(5px);
+}
+.expDate {
+    margin-left: 2rem;
+}
+
+/* ----- MyWatchlist ----- */
+.watchlistHeader {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+}
+/* ----- Administration ----- */
+.actionAdminIconsContainer {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+}
+.adminAddUserContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+.adminAddUserForm {
+    background-color: #bca9c0;
+    width: 65rem;
+    padding: 0 1rem;
+    border-radius: 10px;
+}
+.addAccntHeader {
+    display: flex;
+    margin: 1rem;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+.addUserButton {
+    display: flex;
+    min-height: 2rem;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: medium;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+    border: none;
+    font-weight: 600;
+    color: white;
+    background-color: #e49746;
+    cursor: pointer;
+    box-shadow: 8px 8px 8px rgba(10, 99, 169, 0.16);
+    transition: all 0.1s ease;
+}
+.addUserButton:hover {
+    background-color: #efa04b;
+    color: rgb(240, 226, 226);
+    box-shadow: inset 8px 8px 8px rgba(10, 99, 169, 0.16),
+        inset -5px -5px 5px rgba(207, 196, 196, 0.7);
+    transform: translateY(5px);
+}
+/* #############--RESPONSIVE DESIGNS--############# */ /* ON HEIGHTS */
+@media (max-height: 430px) {
+    .homeContent {
+        margin-top: 1rem;
+    }
+}
+@media (max-height: 400px) {
+    .contactPageContent {
+        margin-top: 2%;
+    }
+    .headerTitle {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    .contactText {
+        margin: 1rem 0;
+    }
+    .homeSlogan {
+        display: none;
+    }
+}
+@media (max-height: 760px) {
+    .homeDescription {
+        display: none;
+    }
+}
+/* @media (max-height: 400px) {
+    .homeSlogan {
+        display: none;
+    }
+} */
+@media (max-height: 415px) {
+    .loginFormContainer {
+        width: 80%;
+    }
+    .forRegister {
+        display: none;
+        visibility: hidden;
+    }
+    .text {
+        display: none;
+    }
+    .homeContent {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+@media (max-height: 540px) {
+    .footerRightLists {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding-top: 0.5rem;
+    }
+    .footerRightLists a,
+    p {
+        font-size: x-small;
+    }
+}
+
+/* ON WIDTH */
+@media (max-width: 880px) {
+    .aboutUsContainer {
+        width: 100%;
+    }
+}
+@media (max-width: 730px) {
+    .homeContent {
+        display: flex;
+        flex-direction: column;
+    }
+}
+@media (max-width: 550px) {
+    .signupContent {
+        width: 100%;
+    }
+    .userInputBox {
+        padding-left: 0.3rem;
+        font-size: x-small;
+    }
+}
+@media (max-width: 430px) {
+    .contactPageContent {
+        width: 90%;
+    }
+}
+@media (max-width: 450px) {
+    .homeContent {
+        padding: 0.5rem;
+    }
+    .homeDescription {
+        line-height: 1.3rem;
+        font-size: medium;
+    }
+    .navbarContainer {
+        padding: 0.5rem;
+    }
+}
+@media (max-width: 870px) {
+    .navbarButtons {
+        display: none;
+        visibility: hidden;
+    }
+}
+@media (min-width: 871px) {
+    .menuMobileButton {
+        display: none;
+        visibility: hidden;
+    }
+}
+@media (max-width: 370px) {
+    .menuMobileButton {
+        padding: 0.2rem;
+    }
+}
+@media (max-width: 380px) {
+    .footerRightLists {
+        flex-direction: column;
+        font-size: smaller;
+        gap: 0.1rem;
+        padding-top: 0.5rem;
+        text-align: center;
+        font-size: x-small;
+    }
+}
