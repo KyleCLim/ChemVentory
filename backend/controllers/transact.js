@@ -81,7 +81,6 @@ export const addChem = (req, res) => {
                     "Item and transaction have been added successfully"
                 );
             } catch (err) {
-                console.log(err);
                 res.status(500).json(err);
             }
         };
@@ -103,8 +102,6 @@ export const deleteChem = (req, res) => {
         const deleteChemQuery = "DELETE FROM inventory_items WHERE `item_id`=?";
 
         db.query(deleteChemQuery, [chemId], (err, data) => {
-            console.log(data);
-            console.log(err);
             if (err) return res.status(403).json(err);
 
             return res.json("Item has been deleted from your inventory");
@@ -173,10 +170,8 @@ export const useChem = async (req, res) => {
                 };
                 await insertTransaction();
                 res.status(200).json("Chemical usage recorded successfully");
-
-                // console.log(itemId);
             } catch (err) {
-                console.log(err);
+                res.status(500).json(err);
             }
         };
 
@@ -208,8 +203,6 @@ export const addQty = (req, res) => {
                     "UPDATE inventory_items SET `quantity`=?, `updated_at`=? WHERE `item_id`=?";
                 const values = [newQty, date, chemId];
 
-                console.log("I'm here");
-
                 const updateItem = () => {
                     return new Promise((resolve, reject) => {
                         db.query(q, values, (err, data) => {
@@ -219,11 +212,7 @@ export const addQty = (req, res) => {
                     });
                 };
 
-                console.log("Pass the update query");
-
                 await updateItem();
-
-                console.log("Successful update query");
 
                 const insertTransQuery =
                     "INSERT INTO transactions (`item_id`, `type`, `user`, `quantity`, `unit`, `created_at`) VALUES(?, ?, ?, ?, ?, ?)";
@@ -251,10 +240,8 @@ export const addQty = (req, res) => {
                 };
                 await insertTransaction();
                 res.status(200).json("Chemical usage recorded successfully");
-
-                // console.log(itemId);
             } catch (err) {
-                console.log(err);
+                res.status(500).json(err);
             }
         };
 
@@ -264,7 +251,6 @@ export const addQty = (req, res) => {
 
 export const getTransactHistory = (req, res) => {
     const token = req.cookies.access_token;
-    // console.log(token);
 
     if (!token) return res.status(401).json("Not authenticated");
     jwt.verify(token, "jwtkey", (err, userInfo) => {

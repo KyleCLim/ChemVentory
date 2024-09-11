@@ -4,7 +4,6 @@ import { format } from "date-fns";
 
 export const getInvPerCont = (req, res) => {
     const token = req.cookies.access_token;
-    // console.log(token);
 
     if (!token) return res.status(401).json("Not authenticated");
 
@@ -23,7 +22,6 @@ export const getInvPerCont = (req, res) => {
 
 export const getInvSummary = (req, res) => {
     const token = req.cookies.access_token;
-    // console.log(token);
 
     if (!token) return res.status(401).json("Not authenticated");
 
@@ -42,7 +40,6 @@ export const getInvSummary = (req, res) => {
 
 export const getWatchlist = (req, res) => {
     const token = req.cookies.access_token;
-    // console.log(token);
 
     if (!token) return res.status(401).json("Not authenticated");
 

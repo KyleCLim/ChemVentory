@@ -33,7 +33,6 @@ export const getTransactLog = (req, res) => {
             "SELECT transaction_id, transactions.item_id, transactions.type, transactions.quantity, transactions.unit, users.user_id, users.fname AS fname, users.lname AS lname, transactions.created_at, inventory_items.chem_name AS chem_name FROM transactions LEFT JOIN inventory_items ON transactions.item_id=inventory_items.item_id LEFT JOIN users ON transactions.user=users.user_id ORDER BY transactions.created_at DESC";
 
         db.query(q, (err, data) => {
-            console.log(data);
             if (err) return res.send(err);
             return res.status(200).json(data);
         });
@@ -52,8 +51,6 @@ export const deleteUser = (req, res) => {
         const deleteUserQuery = "DELETE FROM users WHERE `user_id`=?";
 
         db.query(deleteUserQuery, [id], (err, data) => {
-            console.log(data);
-            console.log(err);
             if (err) return res.status(403).json(err);
 
             return res.json("User has been deleted from the list");
@@ -142,11 +139,6 @@ export const changePassword = (req, res) => {
                         newPassword,
                         salt
                     );
-
-                    console.log("old password:", oldPassword);
-                    console.log("new password:", newPassword);
-                    console.log("stored hash password:", storedPasswordHash);
-                    console.log("compare result", isMatch);
 
                     // Update password in the database
                     db.query(

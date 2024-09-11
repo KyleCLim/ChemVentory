@@ -44,24 +44,34 @@ const InvPerContainer = () => {
             );
             showAlert("Successfully updated watchlist", "info");
         } catch (err) {
-            console.log(err);
             showAlert(err, "error");
         }
     };
 
-    const handleChemUsage = async (id, initQty, unit) => {
+    const handleChemUsage = async (e, id, initQty, unit) => {
+        e.preventDefault();
+        if (parseFloat(usage) > parseFloat(initQty)) {
+            showAlert(
+                "The usage quantity exceeds the stock quantity of the item",
+                "error"
+            );
+            return;
+        }
+
         try {
-            await axios.put(
+            const response = await axios.put(
                 `http://localhost:8800/api/transacts/use-chem/${id}`,
                 { usageQty: usage, initialQty: initQty, unit },
-                {
-                    withCredentials: true,
-                }
+                { withCredentials: true }
             );
-            showAlert("Updated item usage", "info");
+
+            if (response.data === "Usage quantity exceeds stock quantity") {
+                showAlert(response.data, "error");
+            } else {
+                showAlert("Updated item usage", "info");
+            }
         } catch (err) {
-            console.log(err);
-            showAlert(err, "error");
+            showAlert("An error occurred: " + err.message, "error");
         }
     };
 
@@ -76,7 +86,6 @@ const InvPerContainer = () => {
             );
             showAlert("Successfully added quantity", "info");
         } catch (err) {
-            console.log(err);
             showAlert(err, "error");
         }
     };
@@ -236,8 +245,9 @@ const InvPerContainer = () => {
                                         />
                                         <button
                                             className="actionIcons"
-                                            onClick={() =>
+                                            onClick={(e) =>
                                                 handleChemUsage(
+                                                    e,
                                                     item.item_id,
                                                     chemQty,
                                                     usageUnit
