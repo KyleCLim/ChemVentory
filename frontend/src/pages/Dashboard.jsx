@@ -52,7 +52,7 @@ const Dashboard = () => {
                     .filter(
                         (btn) =>
                             !(
-                                currentUser.user_id === 2 &&
+                                currentUser.accnt_type === 2 &&
                                 btn.name === " Administration"
                             )
                     )
