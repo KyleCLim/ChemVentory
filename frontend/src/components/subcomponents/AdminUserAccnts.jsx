@@ -7,9 +7,9 @@ import {
     TableCell,
 } from "@mui/material";
 import { AuthContext } from "../../context/authContext";
-import axios from "axios";
 import DeleteUserModal from "../DeleteUserModal";
 import UpdateUserModal from "../UpdateUserModal";
+import { getUserList } from "../../api/apiService";
 
 const AdminUserAccnts = () => {
     const [userList, setUserList] = useState([]);
@@ -18,11 +18,7 @@ const AdminUserAccnts = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(
-                    `http://localhost:8800/api/admin/admin-userlist`,
-                    { withCredentials: true }
-                );
-                console.log(res.data);
+                const res = await getUserList();
                 setUserList(res.data);
             } catch (err) {
                 console.log(err);

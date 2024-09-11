@@ -4,8 +4,6 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-// import InvSummary from "./subcomponents/InvSummary";
-// import InvPerContainer from "./subcomponents/InvPerContainer";
 import AdminUserAccnts from "./subcomponents/AdminUserAccnts";
 import AdminAddUser from "./subcomponents/AdminAddUser";
 import AdminActHistory from "./subcomponents/AdminActHistory";

@@ -12,7 +12,7 @@ const BackgroundChanger = () => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 5000);
+        }, 4000);
 
         return () => clearInterval(intervalId); // Cleanup interval on component unmount
     }, [images.length]);

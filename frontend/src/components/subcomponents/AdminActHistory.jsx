@@ -6,7 +6,7 @@ import {
     TableRow,
     TableCell,
 } from "@mui/material";
-import axios from "axios";
+import { getTransactionLog } from "../../api/apiService";
 
 const AdminActHistory = () => {
     const [transactionList, setTransactionList] = useState([]);
@@ -25,27 +25,10 @@ const AdminActHistory = () => {
             .join(" ");
     };
 
-    // const handleDeleteItem = async (id) => {
-    //     try {
-    //         await axios.delete(`http://localhost:8800/api/admin/${id}`, {
-    //             withCredentials: true,
-    //         });
-    //         // Remove the deleted item from the state to update the UI
-    //         setTransactionList((prevItems) =>
-    //             prevItems.filter((item) => item.transaction_id !== id)
-    //         );
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
-
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(
-                    `http://localhost:8800/api/admin/admin-trasactionlog`,
-                    { withCredentials: true }
-                );
+                const res = await getTransactionLog();
                 setTransactionList(res.data);
             } catch (err) {}
         };
@@ -63,7 +46,6 @@ const AdminActHistory = () => {
                             "Event",
                             "Qty",
                             "Description",
-                            // "Delete",
                         ].map((head) => (
                             <TableCell
                                 style={{
@@ -85,7 +67,6 @@ const AdminActHistory = () => {
                         return (
                             <TableRow key={transaction.transaction_id}>
                                 <TableCell align="center">
-                                    {/* {formattedTimestamp} */}
                                     {transaction.created_at}
                                 </TableCell>
                                 <TableCell align="center">
@@ -102,23 +83,6 @@ const AdminActHistory = () => {
                                     {capFirstLetter(transaction.chem_name)} was
                                     conducted
                                 </TableCell>
-                                {/* <TableCell align="center">
-                                    <div className="actionAdminIconsContainer">
-                                        <button
-                                            className="actionIcons"
-                                            onClick={() =>
-                                                handleDeleteItem(
-                                                    transaction.transaction_id
-                                                )
-                                            }
-                                        >
-                                            <box-icon
-                                                name="trash"
-                                                color="rgb(203, 112, 112)"
-                                            />
-                                        </button>
-                                    </div>
-                                </TableCell> */}
                             </TableRow>
                         );
                     })}

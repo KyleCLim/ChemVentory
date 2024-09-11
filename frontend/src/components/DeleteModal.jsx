@@ -1,8 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import axios from "axios";
 import { useAlert } from "../context/AlertContext";
+import { deleteItem } from "../api/apiService";
 
 const style = {
     position: "absolute",
@@ -26,10 +26,7 @@ const DeleteModal = ({ id, name, setInventory }) => {
 
     const handleDeleteItem = async (id) => {
         try {
-            await axios.delete(`http://localhost:8800/api/transacts/${id}`, {
-                withCredentials: true,
-            });
-            // Remove the deleted item from the state to update the UI
+            await deleteItem(id);
             showAlert("Item has been deleted from inventory", "warning");
             setInventory((prevItems) =>
                 prevItems.filter((item) => item.item_id !== id)

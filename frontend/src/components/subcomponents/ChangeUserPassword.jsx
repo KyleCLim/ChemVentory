@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useAlert } from "../../context/AlertContext";
+import { changePassword } from "../../api/apiService";
 
 const ChangeUserPassword = ({ id, handleClose }) => {
     const [oldPassword, setOldPassword] = useState("");
@@ -10,14 +10,8 @@ const ChangeUserPassword = ({ id, handleClose }) => {
     const handleClick = async (e, id) => {
         e.preventDefault();
         try {
-            let res = await axios.put(
-                `http://localhost:8800/api/admin/change-password/${id}`,
-                {
-                    oldPassword,
-                    newPassword,
-                },
-                { withCredentials: true }
-            );
+            let res = await changePassword(id, oldPassword, newPassword);
+
             if (res.data.success) {
                 showAlert(res.data.message, "success");
                 setTimeout(() => {

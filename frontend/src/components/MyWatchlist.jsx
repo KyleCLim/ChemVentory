@@ -11,8 +11,14 @@ import {
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { amber } from "@mui/material/colors";
-import axios from "axios";
 import { useAlert } from "../context/AlertContext";
+import {
+    updateFavoriteStatus,
+    getWatchlist,
+    updateChemUsage,
+    addChemicalQty,
+} from "../api/apiService";
+import { capFirstLetter, formatDate } from "../utils/helpers";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -24,14 +30,9 @@ const MyWatchlist = () => {
     const showAlert = useAlert();
 
     const handleFavoriteToggle = async (id, currentStatus) => {
-        const updatedStatus = currentStatus === 1 ? 0 : 1; // Convert 1/0 to the opposite value
+        const updatedStatus = currentStatus === 1 ? 0 : 1;
         try {
-            // Update the favorite status in the backend
-            await axios.put(
-                `http://localhost:8800/api/inventory/add-watchlist/${id}`,
-                { isfavorite: updatedStatus },
-                { withCredentials: true }
-            );
+            await updateFavoriteStatus(id, currentStatus);
             // Update the local state to reflect the new favorite status
             setWatchlist((prevItems) =>
                 prevItems.map((item) =>
@@ -47,47 +48,29 @@ const MyWatchlist = () => {
         }
     };
 
-    const handleChemUsage = async (id, initQty, unit) => {
+    const handleChemUsage = async (id, usageQty, initialQty, unit) => {
+        if (parseFloat(usage) > parseFloat(initialQty)) {
+            showAlert("Usage quantity exceeds available stock", "error");
+            return;
+        }
+
         try {
-            await axios.put(
-                `http://localhost:8800/api/transacts/use-chem/${id}`,
-                { usageQty: usage, initialQty: initQty, unit },
-                {
-                    withCredentials: true,
-                }
-            );
-            showAlert("Updated item usage", "info");
+            await updateChemUsage(id, usageQty, initialQty, unit);
+            showAlert("Chemical usage updated", "info");
         } catch (err) {
-            console.log(err);
-            showAlert(err, "error");
+            console.error(err);
+            showAlert("Error updating chemical usage", "error");
         }
     };
 
-    const handleAddedQty = async (id, initQty, unit) => {
+    const handleAddedQty = async (id, addedQty, initialQty, unit) => {
         try {
-            await axios.put(
-                `http://localhost:8800/api/transacts/add-qty/${id}`,
-                { usageQty: addedQty, initialQty: initQty, unit },
-                {
-                    withCredentials: true,
-                }
-            );
-            showAlert("Successfully added quantity", "info");
+            await addChemicalQty(id, addedQty, initialQty, unit);
+            showAlert("Quantity added successfully", "info");
         } catch (err) {
-            console.log(err);
-            showAlert(err, "error");
+            console.error(err);
+            showAlert("Error adding quantity", "error");
         }
-    };
-
-    const capFirstLetter = (str) => {
-        return str
-            .split(" ")
-            .map((word) => {
-                return (
-                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                );
-            })
-            .join(" ");
     };
 
     const handleSearch = () => {
@@ -102,10 +85,7 @@ const MyWatchlist = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(
-                    `http://localhost:8800/api/inventory/inv-watchlist`,
-                    { withCredentials: true }
-                );
+                const res = await getWatchlist();
                 setWatchlist(res.data);
             } catch (err) {
                 console.log(err);
@@ -159,21 +139,6 @@ const MyWatchlist = () => {
                 <TableBody>
                     {/* MAP ITEMS HERE */}
                     {handleSearch().map((item, index) => {
-                        const mfgDate = new Date(item.mfg_date);
-                        const expDate = new Date(item.exp_date);
-                        const format = {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                        };
-                        const formattedMfgDate = mfgDate.toLocaleString(
-                            "en-US",
-                            format
-                        );
-                        const formattedExpDate = expDate.toLocaleString(
-                            "en-US",
-                            format
-                        );
                         const chemQty = item.quantity;
                         const usageUnit = item.unit;
 
@@ -239,6 +204,7 @@ const MyWatchlist = () => {
                                             onClick={() =>
                                                 handleChemUsage(
                                                     item.item_id,
+                                                    usage,
                                                     chemQty,
                                                     usageUnit
                                                 )
@@ -264,6 +230,7 @@ const MyWatchlist = () => {
                                             onClick={() =>
                                                 handleAddedQty(
                                                     item.item_id,
+                                                    addedQty,
                                                     chemQty,
                                                     usageUnit
                                                 )
@@ -274,10 +241,12 @@ const MyWatchlist = () => {
                                     </form>
                                 </TableCell>
                                 <TableCell align="center">
-                                    {formattedMfgDate}
+                                    {/* {formattedMfgDate} */}
+                                    {formatDate(item.mfg_date)}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {formattedExpDate}
+                                    {/* {formattedExpDate} */}
+                                    {formatDate(item.exp_date)}
                                 </TableCell>
                             </TableRow>
                         );

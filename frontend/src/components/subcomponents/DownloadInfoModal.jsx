@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { format } from "date-fns";
 import {
     TableContainer,
@@ -10,6 +9,7 @@ import {
 } from "@mui/material";
 import * as XLSX from "xlsx/xlsx.mjs";
 import { useAlert } from "../../context/AlertContext";
+import { getTransactionHistory } from "../../api/apiService";
 
 const DownloadInfoModal = ({ id, name, chemBrand, batch, chemSup }) => {
     const [transactions, setTransactions] = useState([]);
@@ -41,13 +41,11 @@ const DownloadInfoModal = ({ id, name, chemBrand, batch, chemSup }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(
-                    `http://localhost:8800/api/transacts/transaction-history/${id}`,
-                    { withCredentials: true }
-                );
+                const res = await getTransactionHistory(id);
                 setTransactions(res.data);
             } catch (err) {
                 console.log(err);
+                showAlert("Error in getting transaction history", "error");
             }
         };
         fetchData();

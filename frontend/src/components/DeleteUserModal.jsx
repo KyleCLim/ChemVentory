@@ -1,8 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import axios from "axios";
 import { useAlert } from "../context/AlertContext";
+import { deleteUser } from "../api/apiService";
 
 const style = {
     position: "absolute",
@@ -26,13 +26,7 @@ const DeleteUserModal = ({ id, account, setUserList }) => {
 
     const handleDeleteItem = async (id) => {
         try {
-            await axios.delete(
-                `http://localhost:8800/api/admin/delete-user/${id}`,
-                {
-                    withCredentials: true,
-                }
-            );
-            // Remove the deleted item from the state to update the UI
+            await deleteUser(id);
             showAlert("User has been deleted from the list", "warning");
             setUserList((prevItems) =>
                 prevItems.filter((user) => user.user_id !== id)
@@ -44,16 +38,6 @@ const DeleteUserModal = ({ id, account, setUserList }) => {
         }
     };
 
-    const capFirstLetter = (str) => {
-        return str
-            .split(" ")
-            .map((word) => {
-                return (
-                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                );
-            })
-            .join(" ");
-    };
     return (
         <div>
             <button className="actionIcons" onClick={handleOpen}>
