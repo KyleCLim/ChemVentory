@@ -11,10 +11,15 @@ import {
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { amber } from "@mui/material/colors";
-import axios from "axios";
 import EditModal from "../EditModal";
 import DeleteModal from "../DeleteModal";
 import { useAlert } from "../../context/AlertContext";
+import {
+    updateFavoriteStatus,
+    updateChemUsage,
+    addChemicalQty,
+    getInventoryPerContainer,
+} from "../../api/apiService";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -29,11 +34,7 @@ const InvPerContainer = () => {
         const updatedStatus = currentStatus === 1 ? 0 : 1;
         try {
             // Update the favorite status in the backend
-            await axios.put(
-                `http://localhost:8800/api/inventory/add-watchlist/${id}`,
-                { isfavorite: updatedStatus },
-                { withCredentials: true }
-            );
+            await updateFavoriteStatus(id, updatedStatus);
             // Update the local state to reflect the new favorite status
             setInventory((prevItems) =>
                 prevItems.map((item) =>
@@ -48,42 +49,24 @@ const InvPerContainer = () => {
         }
     };
 
-    const handleChemUsage = async (e, id, initQty, unit) => {
-        e.preventDefault();
-        if (parseFloat(usage) > parseFloat(initQty)) {
-            showAlert(
-                "The usage quantity exceeds the stock quantity of the item",
-                "error"
-            );
+    const handleChemUsage = async (id, usageQty, initialQty, unit) => {
+        if (parseFloat(usage) > parseFloat(initialQty)) {
+            showAlert("Usage quantity exceeds available stock", "error");
             return;
         }
 
         try {
-            const response = await axios.put(
-                `http://localhost:8800/api/transacts/use-chem/${id}`,
-                { usageQty: usage, initialQty: initQty, unit },
-                { withCredentials: true }
-            );
-
-            if (response.data === "Usage quantity exceeds stock quantity") {
-                showAlert(response.data, "error");
-            } else {
-                showAlert("Updated item usage", "info");
-            }
+            await updateChemUsage(id, usageQty, initialQty, unit);
+            showAlert("Chemical usage updated", "info");
         } catch (err) {
-            showAlert("An error occurred: " + err.message, "error");
+            console.error(err);
+            showAlert("Error updating chemical usage", "error");
         }
     };
 
-    const handleAddedQty = async (id, initQty, unit) => {
+    const handleAddedQty = async (id, addedQty, initialQty, unit) => {
         try {
-            await axios.put(
-                `http://localhost:8800/api/transacts/add-qty/${id}`,
-                { usageQty: addedQty, initialQty: initQty, unit },
-                {
-                    withCredentials: true,
-                }
-            );
+            await addChemicalQty(id, addedQty, initialQty, unit);
             showAlert("Successfully added quantity", "info");
         } catch (err) {
             showAlert(err, "error");
@@ -113,10 +96,7 @@ const InvPerContainer = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(
-                    `http://localhost:8800/api/inventory/inv-per-container`,
-                    { withCredentials: true }
-                );
+                const res = await getInventoryPerContainer();
                 setInventory(res.data);
             } catch (err) {
                 console.log(err);
@@ -245,10 +225,10 @@ const InvPerContainer = () => {
                                         />
                                         <button
                                             className="actionIcons"
-                                            onClick={(e) =>
+                                            onClick={() =>
                                                 handleChemUsage(
-                                                    e,
                                                     item.item_id,
+                                                    usage,
                                                     chemQty,
                                                     usageUnit
                                                 )
@@ -274,6 +254,7 @@ const InvPerContainer = () => {
                                             onClick={() =>
                                                 handleAddedQty(
                                                     item.item_id,
+                                                    addedQty,
                                                     chemQty,
                                                     usageUnit
                                                 )
@@ -305,6 +286,7 @@ const InvPerContainer = () => {
                                             chemNote={item.note}
                                             mfg={item.mfg_date}
                                             exp={item.exp_date}
+                                            setInventory={setInventory}
                                         />
                                         <DeleteModal
                                             id={item.item_id}

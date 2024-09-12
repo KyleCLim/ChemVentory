@@ -14,9 +14,9 @@ const ChangeUserPassword = ({ id, handleClose }) => {
 
             if (res.data.success) {
                 showAlert(res.data.message, "success");
-                setTimeout(() => {
-                    handleClose();
-                }, 2000);
+                // setTimeout(() => {
+                //     handleClose();
+                // }, 2000);
             } else {
                 showAlert(res.data.message, "error");
             }

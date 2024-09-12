@@ -7,22 +7,12 @@ import {
     TableRow,
     TableCell,
 } from "@mui/material";
-import axios from "axios";
+import { capFirstLetter, formatDate } from "../../utils/helpers";
+import { getInventorySummary } from "../../api/apiService";
 
 const InvSummary = () => {
     const [search, setSearch] = useState("");
     const [inventorySummary, setInventorySummary] = useState([]);
-
-    const capFirstLetter = (str) => {
-        return str
-            .split(" ")
-            .map((word) => {
-                return (
-                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                );
-            })
-            .join(" ");
-    };
 
     const handleSearch = () => {
         return inventorySummary.filter((item) =>
@@ -33,10 +23,7 @@ const InvSummary = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(
-                    `http://localhost:8800/api/inventory/inv-summary`,
-                    { withCredentials: true }
-                );
+                const res = await getInventorySummary();
                 setInventorySummary(res.data);
             } catch (err) {
                 console.log(err);
@@ -81,21 +68,6 @@ const InvSummary = () => {
                 <TableBody>
                     {/* MAP ITEMS HERE */}
                     {handleSearch().map((item, index) => {
-                        const mfgDate = new Date(item.oldest_mfg_date);
-                        const expDate = new Date(item.nearest_expiry_date);
-                        const format = {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                        };
-                        const formattedMfgDate = mfgDate.toLocaleString(
-                            "en-US",
-                            format
-                        );
-                        const formattedExpDate = expDate.toLocaleString(
-                            "en-US",
-                            format
-                        );
                         return (
                             <TableRow key={index}>
                                 <TableCell align="center">
@@ -114,10 +86,10 @@ const InvSummary = () => {
                                     {item.unit}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {formattedExpDate}
+                                    {formatDate(item.oldest_mfg_date)}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {formattedMfgDate}
+                                    {formatDate(item.nearest_expiry_date)}
                                 </TableCell>
                             </TableRow>
                         );

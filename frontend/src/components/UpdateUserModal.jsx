@@ -77,6 +77,7 @@ const UpdateUserModal = ({
                                 type={type}
                                 Department={Department}
                                 employee_Id={employee_Id}
+                                handleClose={handleClose}
                                 id={id}
                             />
                         </TabPanel>

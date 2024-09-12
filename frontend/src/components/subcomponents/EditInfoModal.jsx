@@ -17,6 +17,7 @@ const EditInfoModal = ({
     chemNote,
     mfg,
     exp,
+    setInventory,
 }) => {
     const [chemicalData, setChemicalData] = useState({
         chemName: name,
@@ -43,6 +44,9 @@ const EditInfoModal = ({
         e.preventDefault();
         try {
             await updateChemical(id, chemicalData);
+            // setInventory((prevItems) =>
+            //     prevItems.filter((item) => item.item_id !== id)
+            // );
             showAlert("Successfully updated item in inventory", "info");
         } catch (err) {
             console.error(err);

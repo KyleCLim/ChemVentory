@@ -36,6 +36,7 @@ const EditModal = ({
     chemNote,
     mfg,
     exp,
+    setInventory,
 }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -88,6 +89,7 @@ const EditModal = ({
                                 chemNote={chemNote}
                                 mfg={mfg}
                                 exp={exp}
+                                setInventory={setInventory}
                             />
                         </TabPanel>
                         <TabPanel value="2">

@@ -34,7 +34,7 @@ const AdminUserAccnts = () => {
                     <TableRow>
                         {[
                             "Name",
-                            "User Name",
+                            "Username",
                             "Email Address",
                             "Employee ID",
                             "Department/Facility ID",

@@ -70,7 +70,9 @@ const AdminActHistory = () => {
                                     {transaction.created_at}
                                 </TableCell>
                                 <TableCell align="center">
-                                    {transaction.lname}, {transaction.fname}
+                                    {transaction.lname && transaction.fname
+                                        ? `${transaction.lname}, ${transaction.fname}`
+                                        : "Deleted user"}
                                 </TableCell>
                                 <TableCell align="center">
                                     {transaction.type}

@@ -15,7 +15,10 @@ export const getTransactionLog = () => api.get(`admin/admin-trasactionlog`);
 export const changePassword = (id, oldPassword, newPassword) =>
     api.put(`/admin/change-password/${id}`, { oldPassword, newPassword });
 
-export const getUserList = () => api.get(`admin/admin-userlist`);
+export const getUserList = () => api.get(`/admin/admin-userlist`);
+
+export const updateUser = (id, userData) =>
+    api.put(`/admin/update-user/${id}`, userData);
 
 ///////////////////////////////
 //////---Auth Service---//////
@@ -30,11 +33,16 @@ export const updateFavoriteStatus = (id, updatedStatus) =>
         isfavorite: updatedStatus,
     });
 
+export const getInventorySummary = () => api.get(`/inventory/inv-summary`);
+
 export const getWatchlist = () => api.get(`/inventory/inv-watchlist`);
 
 export const updateChemical = (id, chemicalData) => {
     return api.put(`/inventory/update-chem/${id}`, chemicalData);
 };
+
+export const getInventoryPerContainer = () =>
+    api.get(`/inventory/inv-per-container`);
 
 ////////////////////////////////////////
 //////---Transact API Services---//////
